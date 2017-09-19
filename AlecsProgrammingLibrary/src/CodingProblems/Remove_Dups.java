@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 package CodingProblems;
+import Data_Structures.LinkedListNode;
 import java.util.*;
 
 /**
@@ -14,27 +15,41 @@ import java.util.*;
  */
 public class Remove_Dups {
     
-    void RemoveDups(Node n){
-        LinkedList<Node> LinkedList = new LinkedList<Node>();
-        HashSet hs = new HashSet();
-        
+    // using a buffer (HashSet) to store values
+    static void RemoveDups(LinkedListNode n){
+        HashSet<Integer> hs = new HashSet<Integer>();
+        LinkedListNode previous = null;
+        while(n != null){
+            if(hs.contains(n.data)){
+                previous.next  = n.next;           
+            }
+            else {
+                hs.add(n.data);
+                previous = n;
+            }
+            n = n.next;
+        }
+    }
+    
+    // using the runner method and using two pointers to run through the array
+    static void RemoveDups2(LinkedListNode n) {
+        LinkedListNode prev = n.prev;
+        LinkedListNode next = n.next;
+        while(n != null) {
+            
+        }
     }
     
     public static void main(String[] args){
+        LinkedListNode node = new LinkedListNode(4, null, null);
+        node.last = new LinkedListNode(5, null, node);
+        node.last = new LinkedListNode(5, null, node.last);
+        node.last = new LinkedListNode(0, null, node.last);
+        node.last = new LinkedListNode(1, null, node.last);
+        node.last = new LinkedListNode(0, null, node.last);
         
+        RemoveDups(node);
+        node.print(node);    
     }
 }
 
-class Node {
-    Node next = null;
-    Node prev = null;
-    int data;
-    
-    public Node(Node next, Node prev, int data){
-        this.next = next;
-        this.prev = prev;
-        this.data = data;  
-    }
-    
-    
-}
