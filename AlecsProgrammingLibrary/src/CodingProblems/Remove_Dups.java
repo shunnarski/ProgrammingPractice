@@ -49,7 +49,7 @@ public class Remove_Dups {
         node.last = new LinkedListNode(0, null, node.last);
         
         RemoveDups(node);
-        node.print(node);    
+        node.print();    
     }
 }
 

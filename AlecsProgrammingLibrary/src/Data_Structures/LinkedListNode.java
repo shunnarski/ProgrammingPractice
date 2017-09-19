@@ -54,7 +54,8 @@ public class LinkedListNode {
 
     }
 
-    public static void print(LinkedListNode n) {
+    public void print() {
+        LinkedListNode n = this;
         //print linked list before function
         while (n != null) {
             System.out.println(n.data);
