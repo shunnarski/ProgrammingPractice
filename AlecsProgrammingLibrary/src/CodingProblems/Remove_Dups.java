@@ -33,10 +33,21 @@ public class Remove_Dups {
     
     // using the runner method and using two pointers to run through the array
     static void RemoveDups2(LinkedListNode n) {
-        LinkedListNode prev = n.prev;
-        LinkedListNode next = n.next;
-        while(n != null) {
-            
+        // pointer that starts at beginning of list
+        LinkedListNode p1 = n;
+        while(p1 != null) {
+            // pointer that compares each value to make sure there are no duplicates
+            LinkedListNode p2 = p1;
+            while(p2.next != null) {
+                // if this is true, remove it from the list
+                if(p2.next.data == p1.data){
+                    p2.next = p2.next.next;
+                }
+                else {
+                    p2 = p2.next;
+                }   
+            }
+            p1 = p1.next;
         }
     }
     
@@ -48,7 +59,7 @@ public class Remove_Dups {
         node.last = new LinkedListNode(1, null, node.last);
         node.last = new LinkedListNode(0, null, node.last);
         
-        RemoveDups(node);
+        RemoveDups2(node);
         node.print();    
     }
 }
