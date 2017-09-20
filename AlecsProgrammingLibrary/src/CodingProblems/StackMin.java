@@ -5,6 +5,7 @@
  */
 package CodingProblems;
 import java.util.*;
+import Data_Structures.LinkedListNode;
 /**
  * 
  * NOT FINISHED!!!!!
@@ -13,7 +14,6 @@ import java.util.*;
  * @author ass0009
  */
 public class StackMin {
-    private int min;
     private static class StackNode{
         private int data;
         private StackNode next;
@@ -21,13 +21,16 @@ public class StackMin {
             this.data = data;
         }
     }
-    
+    private StackNode mintop;
     private StackNode top;
     
     // pushes a value to the top
     public void push(int value){
         StackNode t = new StackNode(value);
-        setMin(value);
+        // checks to see if the pushed value is larger than the top 
+        if(isSmaller(mintop.data, value)){
+            
+        }
         t.next = top;
         top = t;
     }
@@ -35,19 +38,24 @@ public class StackMin {
     // pops out the top value in the stack
     public int pop() {
         if(top == null) throw new EmptyStackException();
-        top.next = top;
-        return top.data;
+        int value = top.data;
+        top = top.next;
+        return value;
     }
     
     // gets the minimum value in the stack
     public int getMin() {
-        return min;
+        return mintop.data;
     }
     
-    // this would only work if we never popped items.
-    private void setMin(int value){
-        if(min > value){
-            min = value;
+    public boolean isSmaller(int ts, int val){
+        if(val < ts){
+            return true;
+        }
+        else {
+            return false;
         }
     }
+    
+    
 }
