@@ -14,6 +14,13 @@ import Data_Structures.LinkedListNode;
  * @author ass0009
  */
 public class StackMin {
+    // what is a good data structure to store these values?
+    // List could be used. List has an order
+    // LinkedList could be used. Add the value in the middle of the list. But getting a value costs O(N) time
+    // ArrayList? get would be O(1), would still have to search through the array to find the smallest value. 
+    // A Hashtable could be used, but we would still have to compare each value when entering
+    
+    // do we have store each value being added?
     private static class StackNode{
         private int data;
         private StackNode next;
