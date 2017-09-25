@@ -15,7 +15,7 @@ public class FizzBuzz2 {
         int N = in.nextInt();
         int k = in.nextInt();
         Tuple tupleArray[] = new Tuple[k];
-       // Hashtable<Integer, Integer, String> map = new Hashtable<Integer,Integer, String>();
+       // Hashtable<Integer, Integer> map = new Hashtable<Integer,Integer>();
 
         for(int i = 0; i < k; ++i){
             int x = in.nextInt();
