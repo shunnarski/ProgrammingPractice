@@ -1,8 +1,8 @@
 
-package Fall2017MockCompetition;
+//package Fall2017MockCompetition;
 import java.util.*;
 /**
- *
+
  * @author alecshunnarah
  */
 public class FindMe2 {
@@ -16,31 +16,70 @@ public class FindMe2 {
             int x = in.nextInt();
             arr[i] = x;
         }
-        int sortedArray[] = sortArray(arr);
-        for(int i = 0; i < sortedArray.length; ++i){
-            System.out.println(sortedArray[i]);
-        }
+        sort(arr, 0, arr.length - 1);
+        System.out.println(findK(arr, k));
             
         
         
     }
-    static int[] sortArray(int[] arr) {
-        for(int i = 0; i < arr.length; i++){
-            for(int k = i; k > 0; i--){
-                if(arr[k] < arr[k - 1]){
-                   int temp = arr[k];
-                   arr[k] = arr[k - 1];
-                   arr[k - 1] = temp;
-                }
-                
+    static void merge(int[] arr, int left, int mid, int right) {
+        // left size and right size of the array
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+        
+        //instantiate arrays with these sizes
+        int L[] = new int[n1];
+        int R[] = new int[n2];
+        
+        // instantiate the left and right arrays
+        for(int i = 0; i < L.length; ++i)
+            L[i] = arr[left + i];
+        for(int i = 0; i < R.length; ++i)
+            R[i] = arr[mid + 1 + i];
+        
+        int i = 0; 
+        int j = 0;
+        
+        int k = left;
+        while(i < n1 && j < n2){
+            if(L[i] <= R[j]){
+                arr[k] = L[i];
+                i++;
             }
+            else{
+                arr[k] = R[i];
+                j++;
+            }
+            k++;
         }
-        return arr;
+        while(i < n1){
+            arr[k] = L[i];
+            i++;
+            k++;
+        }
+        
+        while(j < n2){
+            arr[k] = R[j];
+            j++;
+            k++;
+        }   
+
+    }
+    // implements merge sort
+    static void sort(int[] arr, int left, int right) {
+        if(left < right) {
+            int m = (left + right) / 2;
+            
+            sort(arr, left, m);
+            sort(arr, m+1, right);
+            
+            merge(arr, left, m, right);
+        }
     }
     
-    static int findK(int[] arr, int k) {
-        
-        return 0;
+    // find the kth element
+    static int findK(int[] arr, int k){
+        return arr[arr.length - k];
     }
 
 }
