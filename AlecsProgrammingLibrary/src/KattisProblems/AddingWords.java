@@ -11,67 +11,72 @@ import java.io.*;
  * @author alecshunnarah
  */
 public class AddingWords {
-    public static void main(String[] args) throws Exception {
+    static HashMap<String, Integer> name2Num = new HashMap();
+    static HashMap<Integer, String> num2Name = new HashMap();
+    public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        HashMap<String, Integer> name2Num = new HashMap();
-        HashMap<Integer, String> num2Name = new HashMap();
-        ArrayList<String> output = new ArrayList();
+        
         while(in.hasNext()){
-            String line[] = in.nextLine().split(" ");
-            // if def is written define a variable and add to HashMaps
-            if(line[0].equals("def")){
-                String varName = line[1];
-                int varVal = Integer.parseInt(line[2]);
-                name2Num.put(varName, varVal);
-                num2Name.put(varVal, varName);
+            String line = in.nextLine() + " ";
+            int firstSpace = line.indexOf(" ");
+            String operation = line.substring(0, firstSpace);
+            String data = line.substring(firstSpace + 1);
+            if(operation.equals("def")){
+                Scanner parser = new Scanner(data);
+                String keyword = parser.next();
+                int value = parser.nextInt();
+                num2Name.remove(name2Num.get(keyword));
+                name2Num.put(keyword, value);
+                num2Name.put(value, keyword);
             }
-            // add something to output if calc appears
-            else if(line[0].equals("calc")){
-                String out = line[1] + " ";
-                boolean varStated = true;
-                int calc = name2Num.get(line[1]);
-                for(int i = 2; i < line.length; i += 2){
-                    switch(line[i]){
-                        case "+":
-                            if(name2Num.containsKey(line[i + 1])){
-                                calc += name2Num.get(line[i + 1]);
-                                out += line[i] + " " + line[i + 1] + " ";
-                            }
-                            else{
-                               varStated = false;
-                               out += line[i] + " " + line[i + 1] + " ";
-                            }
-                            break;
-                        case "-":
-                            if(name2Num.containsKey(line[i + 1])){
-                                calc -= name2Num.get(line[i + 1]);
-                                out += line[i] + " " + line[i + 1] + " ";
-                            }
-                            else {
-                                varStated = false;
-                                out += line[i] + " " + line[i + 1] + " ";
-                            }
-                            break;
-                        case "=":
-                            if(!num2Name.containsKey(calc) || !varStated){
-                                out += line[i] + " unknown";
-                            }
-                            else{
-                                out += line[i] + " " + num2Name.get(calc);
-                            }
-                            break;
-                    }
-                }
-                output.add(out);
+            else if(operation.equals("calc")){
+                String output = eval(data);
+                System.out.println(data + output);
             }
             else{
-                name2Num.clear();
-                num2Name.clear();
-            }            
+                name2Num = new HashMap();
+                num2Name = new HashMap();
+            }
+            
+      }
+        
+    }
+    
+    // returns the name of the defined word after a calculation is made
+    public static String eval(String exp){
+        String expArray[] = exp.split(" ");
+        int val = 0;
+        if(name2Num.containsKey(expArray[0])){
+            val = name2Num.get(expArray[0]);
+        }
+        else{
+            return "unknown";
+        }
+        for(int i = 1; i < expArray.length - 1; i += 2){
+            if(expArray[i].equals("+")){
+                String term = expArray[i + 1];
+                if(name2Num.containsKey(term)){
+                    val += name2Num.get(term);
+                }
+                else{
+                    return "unknown";
+                }
+            }
+            else{
+                String term = expArray[i+1];
+                if(name2Num.containsKey(term)){
+                    val -= name2Num.get(term);
+                }
+                else
+                    return "unknown";
+            }
         }
         
-        for(String value: output){
-            System.out.println(value);
+        if(num2Name.containsKey(val)){
+            return num2Name.get(val);
+        }
+        else{
+            return "unknown";
         }
     }
 }
