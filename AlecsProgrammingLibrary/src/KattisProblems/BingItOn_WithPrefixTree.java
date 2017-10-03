@@ -23,7 +23,6 @@ public class BingItOn_WithPrefixTree {
             String line = in.next().toLowerCase();
             int count = 0;
             count = tree.wordCount(line.toCharArray());
-           
             System.out.println(count);
             tree.add(line);
         }
