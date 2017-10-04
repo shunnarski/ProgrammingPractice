@@ -15,7 +15,6 @@ public class LinearPachinko {
         Map<Character, Integer> map = new HashMap();
         map.put('.', 100);
         map.put('_', 0);
-        map.put('|', 50);
         while(true){
             char line[] = in.nextLine().toCharArray();
             int sumProb = 0;
@@ -49,9 +48,49 @@ public class LinearPachinko {
                             }
                         }
                     }
-                    else if(c == '\''){
-                        for(int j = i; j >= line.length; j++){
-                            if(j > line.length){
+                    else if(c == '|'){
+                        int wallVal = 0;
+                        for(int j = i - 1; j >= -1; j--){
+                            if(j < 0){
+                                wallVal += 100;
+                                break;
+                            }
+                            else if(line[j] == '.'){
+                                wallVal += 100;
+                                break;
+                            }
+                            else if(line[j] == '|'){
+                                wallVal += 0;
+                                break;
+                            }
+                            else if(line[j] == '/'){
+                                wallVal += 0;
+                                break;
+                            }
+                        }
+                        for(int j = i + 1; j <= line.length; j++){
+                            if(j == line.length){
+                                wallVal += 100;
+                                break;
+                            }
+                            else if(line[j] == '.'){
+                                wallVal += 100;
+                                break;
+                            }
+                            else if(line[j] == '|'){
+                                wallVal += 0;
+                                break;
+                            }
+                            else if(line[j] == '/'){
+                                wallVal += 0;
+                                break;
+                            }
+                        }
+                        sumProb += (wallVal / 2);
+                    }
+                    else {
+                        for(int j = i; j <= line.length; j++){
+                            if(j == line.length){
                                 sumProb += 100;
                                 break;
                             }
